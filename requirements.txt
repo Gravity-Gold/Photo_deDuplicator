@@ -1,0 +1,5 @@
+The main file requires:
+tkinter, PIL, imagehash, os, and colorama
+
+The report file requires:
+Nothing
