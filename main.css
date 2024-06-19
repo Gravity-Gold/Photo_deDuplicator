@@ -1,0 +1,38 @@
+﻿body { 
+    font-family: Arial, sans-serif; 
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Ensure body takes at least viewport height */
+    background-color: #1E1E1E;
+    position: relative;
+}
+.content {
+    background-color: white;
+    padding: 20px;
+    max-width: 1200px;
+    width: calc(100% - 20px); /* Adjust width to account for the border */
+    box-sizing: border-box;
+    border: 10px solid black; /* Thinner black border */
+    position: relative;
+    margin-top: 80px; /* Ensure space below logo */
+}
+.logo-container {
+    position: absolute;
+    top: 50px; /* Adjust based on desired spacing from top */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: black;
+    padding: 5px; /* Adjust padding for blending */
+    z-index: 1; /* Ensure the logo appears above content */
+}
+.logo-container img {
+    max-height: 40vh; /* Adjust as needed */
+    max-width: 70vw;}
+
+.w3-quarter img {
+    width: 100%;
+}

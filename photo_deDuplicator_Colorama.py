@@ -3,7 +3,7 @@ from PIL import Image
 import imagehash
 import os
 from colorama import Fore, Back, Style
-from export_Report import exportCSV
+from export_Report import exportCSV, exportHTML
 images = {}
 dupImages = {}
 path = "C:\\IMAGES" #location of the image folder on my computer, for testing purposes
@@ -11,42 +11,50 @@ path = "C:\\IMAGES" #location of the image folder on my computer, for testing pu
 ## If you want a version without colorama, I can put a version of the code without it on my github ##
 
 def reportOpt():
-    os.system("cls")
-    global images,dupImages
+    global images,dupImages,path
  
     print(f"||=================================||")    
     print(f"    [0] {Fore.YELLOW} What does it do? {Fore.RESET}")
     print(f"||=================================||")
     print(f"    [1] {Fore.YELLOW} CSV export{Fore.RESET}")
-    print(f"    [2] {Fore.YELLOW} placeholder{Fore.RESET}")
+    print(f"    [2] {Fore.YELLOW} HTML export{Fore.RESET}")
     print(f"    [3] {Fore.YELLOW} placeholder{Fore.RESET}")
     print(f"||=================================||")
-    print(f"    [5] {Fore.YELLOW} Return\n{Fore.RESET}\n")
+    print(f"    [4] {Fore.YELLOW} Return\n{Fore.RESET}\n")
     
     choice = input("    ")
     print("\n\n")
-    
+    port = 8000
+
     if choice == '0':
-        os.system("cls")
         print("[Press ENTER to move dialogue forward]\n")
         input()
-        print(Fore.YELLOW + "In the future there may or may not be multiple export options. For now, there is only CSV\n")
+        print(Fore.YELLOW + "There are options to export in both CSV, and HTML format.\n")
         input()
         print("A CSV file is a simplified version of the file format used by Excel, which stores Comma Seperate Values")
         print("It can be used to contain simple strings of data, such as this. The program will create a new file in\nthe same directory it is stored in.")
-        print("You can choose the files name, it is recommended that you make the names unique and meaningful.") 
+        print("You can choose the files name, it is recommended that you make the names unique and meaningful.")
+        input()
+        print("To export to HTML, it saves the data in a .json file and accesses a html index which then reads the file, and displays it to you.")
+        print("Currently, it runs the server indefinitely until it is manually closed. This prevents the program from being used in the same instance,")
+        print("so it's best to export it in another format as well if that's something you want to do.")
         print(Fore.RESET) ### If other bluesky options get completed, then a description of them may be added here for the user's clarity. If you're unsure how to format it, look at the other information page
         print("[Press ENTER to return to main menu]")
         input()
     elif choice == '1':
         exportCSV(images,dupImages)
-        os.system("cls")
-    elif choice == '5':
+    elif choice == '2':
+        print("Note. Currently accessing a HTML report will make it impossible to use the program again in a continuous instance.")
+        choice = input("Continue?\n[Y/N]\n")
+        if choice.lower() == 'y':
+            exportHTML(images,dupImages,port,path)
+    elif choice.lower() == 'port':
+        port = int(input("Please inpu the value you'd prefer for your port. The default is 8000"))
+    elif choice == '4':
         return
     reportOpt()
 
 def deDuplicate(path): 
-    os.system("cls")
     global images, dupImages
     for FILE in os.listdir(path):
         imgPath = os.path.join(path,FILE)
@@ -86,7 +94,6 @@ def deDuplicate(path):
 
 def main():
     global path, images, dupImages
-    os.system("cls")
     print(rf"||===============================================================||") ###ASCII art subject to change if anyone wants to do a better job
     print(rf"||     {Fore.RED}     _====_   /\   /\  //===\\  ======  //===\\   {Fore.RESET}        ||")
     print(rf"||     {Fore.RED}     ||   ||  ||   ||  ||   ||    ||    ||   ||   {Fore.RESET}        ||")
@@ -121,7 +128,6 @@ def main():
     
 
     if choice == '0':
-        os.system("cls")
         print("[Press ENTER to move dialogue forward]\n")
         input()
         print(Fore.YELLOW + "The Photo deDuplicator is built to find duplicate images in a specific folder. It has not been known to work on subfolders.\n")
@@ -155,5 +161,6 @@ def main():
             os._exit(0)
     main() #reset once done
 
-main()
-#exportCSV(images,dupImages)    
+
+#exportCSV(images,dupImages)
+main()    
